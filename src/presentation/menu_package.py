@@ -1,6 +1,8 @@
 from dominio.package import Package
 from persistencia.packageDAO import PackageDAO
+from persistencia.package_destinationDAO import PackageDestinationsDAO
 from complementos.plugins import clean_screen, pause_and_clean
+
 
 def read_int(prompt: str) -> int:
     while True:
@@ -12,22 +14,46 @@ def read_int(prompt: str) -> int:
 
 def read_float(prompt: str) -> float:
     while True:
-        value = input(prompt).strip()
+        value = input(prompt).strip().replace(",", ".")
         try:
-            return float(value)
+            number = float(value)
+            if number < 0:
+                print("Error: El monto no puede ser negativo.")
+                continue
+            return number
         except ValueError:
-            print("Error: Debe ingresar un monto numérico válido.")
+            print("Error: Debe ingresar un número válido.")
+
+
+def read_bool(prompt: str) -> bool:
+    while True:
+        value = input(prompt).strip().lower()
+        if value in ("s", "si", "sí", "1", "true"):
+            return True
+        if value in ("n", "no", "0", "false"):
+            return False
+        print("Error: Responda 's' para sí o 'n' para no.")
+
+
+def _print_destinations_for_package(pkg_dest_dao: PackageDestinationsDAO, package_id: int) -> None:
+    destinos = pkg_dest_dao.get_destination_details_by_package(package_id)
+    if destinos:
+        nombres = ", ".join(d._name for d in destinos)
+        print(f"   -> Destinos incluidos: {nombres}")
+    else:
+        print("   -> Destinos incluidos: Sin destinos asignados")
 
 
 def create_package_view(package_dao: PackageDAO) -> None:
     clean_screen()
-    print("--- REGISTRAR NUEVO PAQUETE ---")
+    print("--- CREAR NUEVO PAQUETE ---")
     try:
         name = input("Nombre del paquete: ").strip()
-        start_date = input("Fecha de inicio (AAAA-MM-DD): ").strip()
-        end_date = input("Fecha de término (AAAA-MM-DD): ").strip()
-        total_price = read_float("Precio total: ")
+        start_date = input("Fecha de inicio (YYYY-MM-DD): ").strip()
+        end_date = input("Fecha de término (YYYY-MM-DD): ").strip()
+        total_price = read_float("Precio total ($): ")
         available_slots = read_int("Cupos disponibles: ")
+        status = read_bool("¿Paquete activo? (s/n): ")
 
         new_package = Package(
             name=name,
@@ -35,11 +61,11 @@ def create_package_view(package_dao: PackageDAO) -> None:
             end_date=end_date,
             total_price=total_price,
             available_slots=available_slots,
-            status=True,
+            status=status,
         )
 
         new_id = package_dao.create_package(new_package)
-        print(f"\nPaquete registrado exitosamente con ID: {new_id}")
+        print(f"\nPaquete creado exitosamente con ID: {new_id}")
 
     except (ValueError, RuntimeError) as e:
         print(f"\nError: {e}")
@@ -51,6 +77,8 @@ def list_packages_view(package_dao: PackageDAO, only_available: bool = False) ->
     clean_screen()
     title = "--- PAQUETES DISPONIBLES ---" if only_available else "--- LISTA DE PAQUETES ---"
     print(title)
+    pkg_dest_dao = PackageDestinationsDAO()
+
     try:
         packages = (
             package_dao.get_available_packages()
@@ -58,10 +86,12 @@ def list_packages_view(package_dao: PackageDAO, only_available: bool = False) ->
             else package_dao.get_all_packages()
         )
         if not packages:
-            print("No hay paquetes registrados para mostrar.")
+            print("No hay paquetes registrados.")
         else:
             for pkg in packages:
                 print(pkg.show_data())
+                _print_destinations_for_package(pkg_dest_dao, pkg._package_id)
+                print("-" * 55)
 
     except RuntimeError as e:
         print(f"\nError: {e}")
@@ -69,15 +99,18 @@ def list_packages_view(package_dao: PackageDAO, only_available: bool = False) ->
         pause_and_clean()
 
 
-def search_package_view(package_dao: PackageDAO) -> None:
+def search_package_by_id_view(package_dao: PackageDAO) -> None:
     clean_screen()
-    print("--- BUSCAR PAQUETE ---")
+    print("--- BUSCAR PAQUETE POR ID ---")
     package_id = read_int("Ingrese el ID del paquete: ")
+    pkg_dest_dao = PackageDestinationsDAO()
 
     try:
         pkg = package_dao.get_package_by_id(package_id)
         if pkg:
-            print(f"\nPaquete encontrado: {pkg.show_data()}")
+            print("\nPaquete encontrado:")
+            print(pkg.show_data())
+            _print_destinations_for_package(pkg_dest_dao, pkg._package_id)
         else:
             print("\nNo se encontró ningún paquete con ese ID.")
 
@@ -98,44 +131,43 @@ def update_package_view(package_dao: PackageDAO) -> None:
             print("\nNo existe un paquete con ese ID.")
             return
 
-        print(f"\nDatos actuales: {existing.show_data()}")
-        print("(Presione Enter para mantener el valor actual)")
+        print(f"\nPaquete actual: {existing.show_data()}")
+        print("Presione Enter para mantener el valor actual.\n")
 
-        name_str = input(f"Nuevo nombre [{existing._name}]: ").strip()
-        start_str = input(f"Nueva fecha inicio AAAA-MM-DD [{existing._start_date}]: ").strip()
-        end_str = input(f"Nueva fecha término AAAA-MM-DD [{existing._end_date}]: ").strip()
-        price_str = input(f"Nuevo precio total [{existing._total_price}]: ").strip()
-        slots_str = input(f"Nuevos cupos disponibles [{existing._available_slots}]: ").strip()
-        current_status = "s" if existing._status else "n"
-        status_str = input(f"¿Paquete disponible? (s/n) [{current_status}]: ").strip().lower()
+        new_name = input(f"Nuevo nombre [{existing._name}]: ").strip() or existing._name
+        new_start = input(f"Nueva fecha inicio [{existing._start_date}]: ").strip() or str(existing._start_date)
+        new_end = input(f"Nueva fecha término [{existing._end_date}]: ").strip() or str(existing._end_date)
 
-        updated_name = name_str if name_str else existing._name
-        updated_start = start_str if start_str else existing._start_date
-        updated_end = end_str if end_str else existing._end_date
-        updated_price = float(price_str) if price_str else existing._total_price
-        updated_slots = int(slots_str) if slots_str.isdigit() else existing._available_slots
+        raw_price = input(f"Nuevo precio [{existing._total_price}]: ").strip().replace(",", ".")
+        new_price = float(raw_price) if raw_price else existing._total_price
 
-        if status_str == "s":
-            updated_status = True
-        elif status_str == "n":
-            updated_status = False
+        raw_slots = input(f"Nuevos cupos [{existing._available_slots}]: ").strip()
+        new_slots = int(raw_slots) if raw_slots.isdigit() else existing._available_slots
+
+        raw_status = input(
+            f"¿Activo? (s/n) [{'s' if existing._status else 'n'}]: "
+        ).strip().lower()
+        if raw_status in ("s", "si", "sí", "1", "true"):
+            new_status = True
+        elif raw_status in ("n", "no", "0", "false"):
+            new_status = False
         else:
-            updated_status = existing._status
+            new_status = existing._status
 
-        updated_package = Package(
+        updated_pkg = Package(
             package_id=existing._package_id,
-            name=updated_name,
-            start_date=updated_start,
-            end_date=updated_end,
-            total_price=updated_price,
-            available_slots=updated_slots,
-            status=updated_status,
+            name=new_name,
+            start_date=new_start,
+            end_date=new_end,
+            total_price=new_price,
+            available_slots=new_slots,
+            status=new_status,
         )
 
-        if package_dao.update_package(updated_package):
+        if package_dao.update_package(updated_pkg):
             print("\nPaquete actualizado correctamente.")
         else:
-            print("\nNo se realizaron cambios en el paquete.")
+            print("\nNo se realizaron cambios.")
 
     except (ValueError, RuntimeError) as e:
         print(f"\nError: {e}")
@@ -149,12 +181,12 @@ def delete_package_view(package_dao: PackageDAO) -> None:
     package_id = read_int("Ingrese el ID del paquete a eliminar: ")
 
     try:
-        pkg = package_dao.get_package_by_id(package_id)
-        if not pkg:
+        existing = package_dao.get_package_by_id(package_id)
+        if not existing:
             print("\nNo existe un paquete con ese ID.")
             return
 
-        print(f"\nPaquete a eliminar: {pkg.show_data()}")
+        print(f"\nPaquete a eliminar: {existing.show_data()}")
         confirm = input("¿Está seguro de eliminar este paquete? (s/n): ").strip().lower()
 
         if confirm == "s":
@@ -165,7 +197,7 @@ def delete_package_view(package_dao: PackageDAO) -> None:
         else:
             print("\nOperación cancelada.")
 
-    except (ValueError, RuntimeError) as e:
+    except RuntimeError as e:
         print(f"\nError: {e}")
     finally:
         pause_and_clean()
@@ -176,15 +208,14 @@ def run_package_menu() -> None:
 
     while True:
         clean_screen()
-        print("===============================")
-        print("     GESTIÓN DE PAQUETES")
-        print("===============================")
+        print("======================================")
+        print("         GESTIÓN DE PAQUETES")
+        print("======================================")
         print("1. Crear paquete")
-        print("2. Listar todos los paquetes")
-        print("3. Listar paquetes disponibles")
-        print("4. Buscar paquete por ID")
-        print("5. Actualizar paquete")
-        print("6. Eliminar paquete")
+        print("2. Listar paquetes")
+        print("3. Buscar paquete por ID")
+        print("4. Actualizar paquete")
+        print("5. Eliminar paquete")
         print("0. Volver / Salir")
 
         option = input("Seleccione una opción: ").strip()
@@ -192,14 +223,12 @@ def run_package_menu() -> None:
         if option == "1":
             create_package_view(package_dao)
         elif option == "2":
-            list_packages_view(package_dao, only_available=False)
+            list_packages_view(package_dao)
         elif option == "3":
-            list_packages_view(package_dao, only_available=True)
+            search_package_by_id_view(package_dao)
         elif option == "4":
-            search_package_view(package_dao)
-        elif option == "5":
             update_package_view(package_dao)
-        elif option == "6":
+        elif option == "5":
             delete_package_view(package_dao)
         elif option == "0":
             clean_screen()
@@ -207,7 +236,3 @@ def run_package_menu() -> None:
         else:
             print("\nOpción no válida. Intente nuevamente.")
             pause_and_clean()
-
-
-if __name__ == "__main__":
-    run_package_menu()

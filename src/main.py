@@ -4,6 +4,7 @@ from persistencia.userDAO import UserDAO
 from presentation.menu_user import run_user_menu
 from presentation.menu_package import run_package_menu
 from presentation.menu_reservation import run_reservation_menu, run_client_reservation_menu
+from presentation.menu_destination import run_destination_menu
 from presentation.menu_package_destination import run_package_destinations_menu
 from init_db import initialize_database
 from complementos.plugins import clean_screen, pause_and_clean
@@ -60,7 +61,8 @@ def authenticated_menu(current_user: User) -> None:
             print("1. Gestionar usuarios")
             print("2. Gestionar paquetes")
             print("3. Gestionar reservas")
-            print("4. Gestionar destinos por paquete")
+            print("4. Gestionar destinos")
+            print("5. Gestionar destinos por paquete")
             print("0. Cerrar sesión")
 
             option = input("Seleccione una opción: ").strip()
@@ -72,6 +74,8 @@ def authenticated_menu(current_user: User) -> None:
             elif option == "3":
                 run_reservation_menu()
             elif option == "4":
+                run_destination_menu()
+            elif option == "5":
                 run_package_destinations_menu()
             elif option == "0":
                 clean_screen()
@@ -101,6 +105,7 @@ def authenticated_menu(current_user: User) -> None:
 
 def main_menu() -> None:
     initialize_database()
+    pause_and_clean()
     user_dao = UserDAO()
 
     while True:
