@@ -1,7 +1,7 @@
 import sqlite3
 import pymysql
-from persistencia.connection import abrir_conexion, marcador_sql  
-from dominio.user import User
+from persistencia.connection import abrir_conexion, marcador_sql
+from dominio.user import User  
 
 
 class UserDAO:
@@ -12,7 +12,7 @@ class UserDAO:
         query = f"""
             INSERT INTO users (first_name, last_name, email, password_hash, role)
             VALUES ({self.placeholder}, {self.placeholder}, {self.placeholder}, {self.placeholder}, {self.placeholder})
-        """  #[cite: 1]
+        """  
         params = (
             user._first_name,
             user._last_name,
@@ -24,7 +24,7 @@ class UserDAO:
         conn = None
         cursor = None
         try:
-            conn = abrir_conexion()  #[cite: 1]
+            conn = abrir_conexion()
             cursor = conn.cursor()
             cursor.execute(query, params)
             conn.commit()
@@ -49,12 +49,12 @@ class UserDAO:
             SELECT user_id, first_name, last_name, email, password_hash, role
             FROM users
             WHERE user_id = {self.placeholder}
-        """  #[cite: 1]
+        """  
 
         conn = None
         cursor = None
         try:
-            conn = abrir_conexion()  #[cite: 1]
+            conn = abrir_conexion() 
             cursor = conn.cursor()
             cursor.execute(query, (user_id,))
             row = cursor.fetchone()
@@ -65,7 +65,7 @@ class UserDAO:
                     first_name=row[1],
                     last_name=row[2],
                     email=row[3],
-                    pasword_hash=row[4],
+                    password_hash=row[4],
                     role=row[5],
                 )
             return None
@@ -82,12 +82,12 @@ class UserDAO:
             SELECT user_id, first_name, last_name, email, password_hash, role
             FROM users
             WHERE email = {self.placeholder}
-        """  #[cite: 1]
+        """  
 
         conn = None
         cursor = None
         try:
-            conn = abrir_conexion()  #[cite: 1]
+            conn = abrir_conexion() 
             cursor = conn.cursor()
             cursor.execute(query, (email,))
             row = cursor.fetchone()
@@ -98,7 +98,7 @@ class UserDAO:
                     first_name=row[1],
                     last_name=row[2],
                     email=row[3],
-                    pasword_hash=row[4],
+                    password_hash=row[4],
                     role=row[5],
                 )
             return None
@@ -120,7 +120,7 @@ class UserDAO:
         cursor = None
         users = []
         try:
-            conn = abrir_conexion()  #[cite: 1]
+            conn = abrir_conexion() 
             cursor = conn.cursor()
             cursor.execute(query)
             rows = cursor.fetchall()
@@ -132,7 +132,7 @@ class UserDAO:
                         first_name=row[1],
                         last_name=row[2],
                         email=row[3],
-                        pasword_hash=row[4],
+                        password_hash=row[4],
                         role=row[5],
                     )
                 )
@@ -157,7 +157,7 @@ class UserDAO:
                 password_hash = {self.placeholder},
                 role = {self.placeholder}
             WHERE user_id = {self.placeholder}
-        """  #[cite: 1]
+        """ 
         params = (
             user._first_name,
             user._last_name,
@@ -170,7 +170,7 @@ class UserDAO:
         conn = None
         cursor = None
         try:
-            conn = abrir_conexion()  #[cite: 1]
+            conn = abrir_conexion() 
             cursor = conn.cursor()
             cursor.execute(query, params)
             conn.commit()
@@ -190,12 +190,12 @@ class UserDAO:
                 conn.close()
 
     def delete_user(self, user_id: int) -> bool:
-        query = f"DELETE FROM users WHERE user_id = {self.placeholder}"  #[cite: 1]
+        query = f"DELETE FROM users WHERE user_id = {self.placeholder}" 
 
         conn = None
         cursor = None
         try:
-            conn = abrir_conexion()  #[cite: 1]
+            conn = abrir_conexion()  
             cursor = conn.cursor()
             cursor.execute(query, (user_id,))
             conn.commit()

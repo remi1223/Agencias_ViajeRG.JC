@@ -1,0 +1,169 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Página-1" id="c19zx59KsE1JyLDtZXsN">
+    <mxGraphModel dx="3320" dy="1343" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="cls_user" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fillColor=none;strokeColor=#000000;fontSize=14;" value="User" vertex="1">
+          <mxGeometry height="230" width="320" x="120" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="cls_user_attrs" parent="cls_user" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastworld;fontSize=12;" value="- _user_id: int | None&#xa;- _first_name: str&#xa;- _last_name: str&#xa;- _email: str&#xa;- _password_hash: str&#xa;- _role: str" vertex="1">
+          <mxGeometry height="120" width="320" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="cls_user_sep" parent="cls_user" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastworld;strokeColor=#000000;" value="" vertex="1">
+          <mxGeometry height="8" width="320" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="cls_user_methods" parent="cls_user" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastworld;fontSize=12;" value="+ __init__(first_name, last_name, email, password_hash, role, user_id)&#xa;+ show_data(): str" vertex="1">
+          <mxGeometry height="72" width="320" y="158" as="geometry" />
+        </mxCell>
+        <mxCell id="cls_package" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fillColor=none;strokeColor=#000000;fontSize=14;" value="Package" vertex="1">
+          <mxGeometry height="250" width="340" x="780" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="cls_package_attrs" parent="cls_package" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastworld;fontSize=12;" value="- _package_id: int | None&#xa;- _name: str&#xa;- _start_date: date&#xa;- _end_date: date&#xa;- _total_price: float&#xa;- _available_slots: int&#xa;- _status: bool" vertex="1">
+          <mxGeometry height="140" width="340" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="cls_package_sep" parent="cls_package" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastworld;strokeColor=#000000;" value="" vertex="1">
+          <mxGeometry height="8" width="340" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="cls_package_methods" parent="cls_package" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastworld;fontSize=12;" value="+ __init__(name, start_date, end_date, total_price, available_slots, status, package_id)&#xa;+ show_data(): str" vertex="1">
+          <mxGeometry height="72" width="340" y="178" as="geometry" />
+        </mxCell>
+        <mxCell id="cls_reservation" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fillColor=none;strokeColor=#000000;fontSize=14;" value="Reservation" vertex="1">
+          <mxGeometry height="250" width="350" x="440" y="500" as="geometry" />
+        </mxCell>
+        <mxCell id="cls_reservation_attrs" parent="cls_reservation" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastworld;fontSize=12;" value="- _reservation_id: int | None&#xa;- _user_id: int&#xa;- _package_id: int&#xa;- _reservation_date: date&#xa;- _number_of_people: int&#xa;- _total_amount: float&#xa;- _status: bool" vertex="1">
+          <mxGeometry height="140" width="350" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="cls_reservation_sep" parent="cls_reservation" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastworld;strokeColor=#000000;" value="" vertex="1">
+          <mxGeometry height="8" width="350" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="cls_reservation_methods" parent="cls_reservation" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastworld;fontSize=12;" value="+ __init__(user_id, package_id, reservation_date, number_of_people, total_amount, status, reservation_id)&#xa;+ show_data(): str" vertex="1">
+          <mxGeometry height="72" width="350" y="178" as="geometry" />
+        </mxCell>
+        <mxCell id="cls_pkg_dest" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fillColor=none;strokeColor=#000000;fontSize=14;" value="PackageDestination" vertex="1">
+          <mxGeometry height="160" width="310" x="1420" y="500" as="geometry" />
+        </mxCell>
+        <mxCell id="cls_pkg_dest_attrs" parent="cls_pkg_dest" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastworld;fontSize=12;" value="- _package_id: int&#xa;- _destination_id: int" vertex="1">
+          <mxGeometry height="58" width="310" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="cls_pkg_dest_sep" parent="cls_pkg_dest" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastworld;strokeColor=#000000;" value="" vertex="1">
+          <mxGeometry height="8" width="310" y="88" as="geometry" />
+        </mxCell>
+        <mxCell id="cls_pkg_dest_methods" parent="cls_pkg_dest" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastworld;fontSize=12;" value="+ __init__(package_id: int, destination_id: int)&#xa;+ show_data(): str" vertex="1">
+          <mxGeometry height="64" width="310" y="96" as="geometry" />
+        </mxCell>
+        <mxCell id="cls_destination" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fillColor=none;strokeColor=#000000;fontSize=14;" value="Destination" vertex="1">
+          <mxGeometry height="230" width="330" x="1410" y="840" as="geometry" />
+        </mxCell>
+        <mxCell id="cls_destination_attrs" parent="cls_destination" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastworld;fontSize=12;" value="- _destination_id: int | None&#xa;- _name: str&#xa;- _country_id: int&#xa;- _description: str | None&#xa;- _base_cost: float&#xa;- _status: bool" vertex="1">
+          <mxGeometry height="120" width="330" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="cls_destination_sep" parent="cls_destination" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastworld;strokeColor=#000000;" value="" vertex="1">
+          <mxGeometry height="8" width="330" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="cls_destination_methods" parent="cls_destination" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastworld;fontSize=12;" value="+ __init__(name, country_id, base_cost, status, description, destination_id)&#xa;+ show_data(): str" vertex="1">
+          <mxGeometry height="72" width="330" y="158" as="geometry" />
+        </mxCell>
+        <mxCell id="cls_country" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fillColor=none;strokeColor=#000000;fontSize=14;" value="Country" vertex="1">
+          <mxGeometry height="160" width="300" x="1425" y="1220" as="geometry" />
+        </mxCell>
+        <mxCell id="cls_country_attrs" parent="cls_country" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastworld;fontSize=12;" value="- _country_id: int | None&#xa;- _name: str" vertex="1">
+          <mxGeometry height="58" width="300" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="cls_country_sep" parent="cls_country" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastworld;strokeColor=#000000;" value="" vertex="1">
+          <mxGeometry height="8" width="300" y="88" as="geometry" />
+        </mxCell>
+        <mxCell id="cls_country_methods" parent="cls_country" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastworld;fontSize=12;" value="+ __init__(name: str, country_id: int | None)&#xa;+ show_data(): str" vertex="1">
+          <mxGeometry height="64" width="300" y="96" as="geometry" />
+        </mxCell>
+        <mxCell id="cls_trip_status" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fillColor=none;strokeColor=#000000;fontSize=14;" value="TripStatus" vertex="1">
+          <mxGeometry height="175" width="320" x="960" y="500" as="geometry" />
+        </mxCell>
+        <mxCell id="cls_trip_status_attrs" parent="cls_trip_status" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastworld;fontSize=12;" value="- _trip_status_id: int | None&#xa;- _name: str&#xa;- _description: str | None" vertex="1">
+          <mxGeometry height="72" width="320" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="cls_trip_status_sep" parent="cls_trip_status" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastworld;strokeColor=#000000;" value="" vertex="1">
+          <mxGeometry height="8" width="320" y="102" as="geometry" />
+        </mxCell>
+        <mxCell id="cls_trip_status_methods" parent="cls_trip_status" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastworld;fontSize=12;" value="+ __init__(name, description, trip_status_id)&#xa;+ show_data(): str" vertex="1">
+          <mxGeometry height="65" width="320" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="cls_transport_type" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fillColor=none;strokeColor=#000000;fontSize=14;" value="TransportType" vertex="1">
+          <mxGeometry height="175" width="320" x="1880" y="500" as="geometry" />
+        </mxCell>
+        <mxCell id="cls_transport_type_attrs" parent="cls_transport_type" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastworld;fontSize=12;" value="- _transport_type_id: int | None&#xa;- _name: str&#xa;- _description: str | None" vertex="1">
+          <mxGeometry height="72" width="320" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="cls_transport_type_sep" parent="cls_transport_type" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastworld;strokeColor=#000000;" value="" vertex="1">
+          <mxGeometry height="8" width="320" y="102" as="geometry" />
+        </mxCell>
+        <mxCell id="cls_transport_type_methods" parent="cls_transport_type" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=8;spacingRight=8;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastworld;fontSize=12;" value="+ __init__(name, description, transport_type_id)&#xa;+ show_data(): str" vertex="1">
+          <mxGeometry height="65" width="320" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="rel_user_res" edge="1" parent="1" source="cls_user" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;endFill=0;exitX=0.5;exitY=1;entryX=0;entryY=0.5;" target="cls_reservation" value="realiza">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="lbl_u1" parent="1" style="text;html=1;align=center;verticalAlign=middle;" value="1" vertex="1">
+          <mxGeometry height="20" width="30" x="250" y="340" as="geometry" />
+        </mxCell>
+        <mxCell id="lbl_r1" parent="1" style="text;html=1;align=center;verticalAlign=middle;" value="0..*" vertex="1">
+          <mxGeometry height="20" width="40" x="395" y="595" as="geometry" />
+        </mxCell>
+        <mxCell id="rel_pkg_res" edge="1" parent="1" source="cls_package" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;endFill=0;exitX=0.25;exitY=1;entryX=1;entryY=0.5;" target="cls_reservation" value="incluido en">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="lbl_p1" parent="1" style="text;html=1;align=center;verticalAlign=middle;" value="1" vertex="1">
+          <mxGeometry height="20" width="30" x="835" y="360" as="geometry" />
+        </mxCell>
+        <mxCell id="lbl_r2" parent="1" style="text;html=1;align=center;verticalAlign=middle;" value="*" vertex="1">
+          <mxGeometry height="20" width="30" x="795" y="595" as="geometry" />
+        </mxCell>
+        <mxCell id="rel_pkg_pkgdest" edge="1" parent="1" source="cls_package" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=diamond;endFill=1;exitX=1;exitY=0.5;entryX=0.5;entryY=0;" target="cls_pkg_dest" value="compuesto por">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="lbl_p2" parent="1" style="text;html=1;align=center;verticalAlign=middle;" value="1" vertex="1">
+          <mxGeometry height="20" width="30" x="1130" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="lbl_pd1" parent="1" style="text;html=1;align=center;verticalAlign=middle;" value="*" vertex="1">
+          <mxGeometry height="20" width="30" x="1580" y="470" as="geometry" />
+        </mxCell>
+        <mxCell id="rel_dest_pkgdest" edge="1" parent="1" source="cls_destination" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;endFill=0;exitX=0.5;exitY=0;entryX=0.5;entryY=1;" target="cls_pkg_dest" value="asociado a">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="lbl_d1" parent="1" style="text;html=1;align=center;verticalAlign=middle;" value="1" vertex="1">
+          <mxGeometry height="20" width="30" x="1580" y="810" as="geometry" />
+        </mxCell>
+        <mxCell id="lbl_pd2" parent="1" style="text;html=1;align=center;verticalAlign=middle;" value="*" vertex="1">
+          <mxGeometry height="20" width="30" x="1580" y="670" as="geometry" />
+        </mxCell>
+        <mxCell id="rel_country_dest" edge="1" parent="1" source="cls_country" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;endFill=0;exitX=0.5;exitY=0;entryX=0.5;entryY=1;" target="cls_destination" value="ubica">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="lbl_c1" parent="1" style="text;html=1;align=center;verticalAlign=middle;" value="1" vertex="1">
+          <mxGeometry height="20" width="30" x="1580" y="1190" as="geometry" />
+        </mxCell>
+        <mxCell id="lbl_d2" parent="1" style="text;html=1;align=center;verticalAlign=middle;" value="*" vertex="1">
+          <mxGeometry height="20" width="30" x="1580" y="1080" as="geometry" />
+        </mxCell>
+        <mxCell id="rel_status_pkgdest" edge="1" parent="1" source="cls_trip_status" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;endFill=0;exitX=1;exitY=0.5;entryX=0;entryY=0.5;" target="cls_pkg_dest" value="estado">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="lbl_ts1" parent="1" style="text;html=1;align=center;verticalAlign=middle;" value="1" vertex="1">
+          <mxGeometry height="20" width="30" x="1290" y="565" as="geometry" />
+        </mxCell>
+        <mxCell id="lbl_pd3" parent="1" style="text;html=1;align=center;verticalAlign=middle;" value="*" vertex="1">
+          <mxGeometry height="20" width="30" x="1390" y="565" as="geometry" />
+        </mxCell>
+        <mxCell id="rel_trans_pkgdest" edge="1" parent="1" source="cls_transport_type" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=open;endFill=0;exitX=0;exitY=0.5;entryX=1;entryY=0.5;" target="cls_pkg_dest" value="transporte">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="lbl_tt1" parent="1" style="text;html=1;align=center;verticalAlign=middle;" value="1" vertex="1">
+          <mxGeometry height="20" width="30" x="1845" y="565" as="geometry" />
+        </mxCell>
+        <mxCell id="lbl_pd4" parent="1" style="text;html=1;align=center;verticalAlign=middle;" value="*" vertex="1">
+          <mxGeometry height="20" width="30" x="1740" y="565" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
